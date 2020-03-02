@@ -1,10 +1,84 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  OnInit,
+  AfterViewInit
+} from "@angular/core";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import { htmlData } from "../assets/html/html.data";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
-export class AppComponent {
-  title = 'pdfConvertDeneme';
+export class AppComponent implements OnInit, AfterViewInit {
+  title = "pdfConvertDeneme";
+  @ViewChild("denemeText", { static: true }) denemeText: ElementRef;
+  htmlData: string = htmlData;
+
+  ngOnInit() {
+    // html2canvas(this.denemeText.nativeElement).then(canvas => {
+    //   const link = document.createElement("a");
+    //   link.href = canvas.toDataURL("image/png");
+    //   const fileName = "marble-diagram.png";
+    //   link.download = fileName;
+    //   link.click();
+    // });
+  }
+
+  ngAfterViewInit() {
+    // html2canvas(this.denemeText.nativeElement, {scrollY: -window.scrollY}).then(canvas => {
+    //   const link = document.createElement("a");
+    //   link.href = canvas.toDataURL("image/png");
+    //   const fileName = "marble-diagram.png";
+    //   link.download = fileName;
+    //   link.click();
+    // });
+    // const doc = new jsPDF();
+    // const specialElementHandlers = {
+    //   "#editor": function(element, renderer) {
+    //     return true;
+    //   }
+    // };
+    // const content = this.denemeText.nativeElement;
+    // doc.fromHTML(content.innerHTML, 15, 15, {
+    //   width: 190,
+    //   elementHandlers: specialElementHandlers
+    // });
+    // doc.save();
+  }
+
+  print() {
+    // html2canvas(this.denemeText.nativeElement).then(canvas => {
+    //   const link = document.createElement("a");
+    //   link.href = canvas.toDataURL("image/png");
+    //   const fileName = "marble-diagram.png";
+    //   link.download = fileName;
+    //   link.click();
+    // });
+
+    html2canvas(this.denemeText.nativeElement, {
+      scrollY: -window.scrollY
+    }).then(canvas => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      const fileName = "marble-diagram.png";
+      link.download = fileName;
+      // link.click();
+      const pdf = new jsPDF("p", "pt", "a4");
+      pdf.fromHTML(canvas.toDataURL("image/png"));
+      pdf.save();
+    });
+    // const elementHandler = {
+    //   "#ignorePDF": function(element, renderer) {
+    //     return true;
+    //   }
+    // };
+    // const doc = new jsPDF();
+    // doc.fromHTML(this.denemeText.nativeElement, 15, 15);
+    // doc.save("two-by-four.pdf");
+  }
 }

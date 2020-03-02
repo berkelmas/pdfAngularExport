@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "Airbnb-Book";
+  src: url(../fonts/AirbnbCerealBook.ttf);
+}
+
+@font-face {
+  font-family: "Airbnb-Light";
+  src: url(../fonts/AirbnbCerealLight.ttf);
+}
+
+* {
+  font-family: "Airbnb-Book";
+}
+
+body {
+  margin-top: 1cm;
+  margin-bottom: 1cm;
+  margin-left: 1cm;
+  margin-right: 1cm;
+}
+
+.book-text {
+  font-family: "Airbnb-Book";
+  color: #767676;
+  font-size: 19px;
+}
+
+.light-text {
+  font-family: "Airbnb-Light";
+  color: #767676;
+  font-size: 15px;
+}
+
+.form-title-text {
+  font-family: "Airbnb-Book";
+  color: #484848;
+  font-size: 20px;
+}
+
+.form-answer-text {
+  font-family: "Airbnb-Light";
+  color: #767676;
+  font-size: 20px;
+}
