@@ -63,22 +63,38 @@ export class AppComponent implements OnInit, AfterViewInit {
     html2canvas(this.denemeText.nativeElement, {
       scrollY: -window.scrollY
     }).then(canvas => {
-      const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/png");
-      const fileName = "marble-diagram.png";
-      link.download = fileName;
-      // link.click();
-      const pdf = new jsPDF("p", "pt", "a4");
-      pdf.fromHTML(canvas.toDataURL("image/png"));
-      pdf.save();
+      const imgWidth = 210;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      const doc = new jsPDF("p", "mm");
+      let position = 0;
+
+      doc.addImage(
+        canvas.toDataURL("image/png"),
+        "PNG",
+        0,
+        position,
+        imgWidth,
+        imgHeight
+      );
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(
+          canvas.toDataURL("image/png"),
+          "PNG",
+          0,
+          position,
+          imgWidth,
+          imgHeight
+        );
+        heightLeft -= pageHeight;
+      }
+      doc.save("file.pdf");
     });
-    // const elementHandler = {
-    //   "#ignorePDF": function(element, renderer) {
-    //     return true;
-    //   }
-    // };
-    // const doc = new jsPDF();
-    // doc.fromHTML(this.denemeText.nativeElement, 15, 15);
-    // doc.save("two-by-four.pdf");
   }
 }
